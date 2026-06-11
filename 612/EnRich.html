@@ -16,63 +16,51 @@ html, body {
     background: #000;
 }
 
-/* 影片（不裁切版本） */
 #video {
     position: fixed;
     top: 50%;
     left: 50%;
-
     width: 100vw;
     height: 100vh;
-
     transform: translate(-50%, -50%);
-
     object-fit: contain;
     background: #000;
-
     cursor: pointer;
 }
 
-/* 提示文字 */
 #hint {
     position: fixed;
     bottom: 20px;
     right: 20px;
-
     color: white;
-    font-family: Arial, sans-serif;
+    font-family: Arial;
     background: rgba(0,0,0,0.6);
     padding: 8px 12px;
     border-radius: 8px;
     font-size: 14px;
     opacity: 0.8;
-
     transition: opacity 0.3s;
     z-index: 100;
 }
 
-/* 旋轉提示（覆蓋層，不會影響影片播放） */
+/* ⚠️ 關鍵：預設是隱藏 */
 #rotateMessage {
     display: none;
-
     position: fixed;
     inset: 0;
-
     background: black;
     color: white;
 
-    display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
 
     font-size: 22px;
-    font-family: Arial, sans-serif;
-
+    font-family: Arial;
     z-index: 9999;
 }
 
-/* 直向顯示提示，但不隱藏影片（關鍵修正） */
+/* 只在直式顯示 */
 @media screen and (orientation: portrait) {
     #rotateMessage {
         display: flex;
