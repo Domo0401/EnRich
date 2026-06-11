@@ -16,33 +16,92 @@ html, body {
     background: #000;
 }
 
+/* 影片 */
 #video {
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 50%;
+    left: 50%;
+
     width: 100vw;
     height: 100vh;
-    object-fit: cover;
+
+    transform: translate(-50%, -50%);
+
+    object-fit: contain;
+    background: #000;
     cursor: pointer;
 }
 
+/* 聲音提示 */
 #hint {
     position: fixed;
     bottom: 20px;
     right: 20px;
     color: white;
     font-family: Arial, sans-serif;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.6);
     padding: 8px 12px;
     border-radius: 8px;
     font-size: 14px;
     opacity: 0.8;
+    transition: opacity 0.3s;
+    z-index: 100;
+}
+
+/* 旋轉提示 */
+#rotateMessage {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: black;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 24px;
+    font-family: Arial, sans-serif;
+    z-index: 9999;
+}
+
+/* 手機直向 */
+@media screen and (orientation: portrait) {
+    #video {
+        display: none;
+    }
+
+    #hint {
+        display: none;
+    }
+
+    #rotateMessage {
+        display: flex;
+    }
+}
+
+/* 橫向 */
+@media screen and (orientation: landscape) {
+    #video {
+        display: block;
+    }
+
+    #rotateMessage {
+        display: none;
+    }
 }
 </style>
 </head>
 
 <body>
 
+<!-- 直向提示 -->
+<div id="rotateMessage">
+    <div>
+        📱<br><br>
+        請將手機旋轉為橫向觀看
+    </div>
+</div>
+
+<!-- 影片 -->
 <video
     id="video"
     autoplay
@@ -54,6 +113,7 @@ html, body {
     您的瀏覽器不支援影片播放。
 </video>
 
+<!-- 聲音提示 -->
 <div id="hint">
     點擊畫面開啟／關閉聲音
 </div>
@@ -63,13 +123,16 @@ const video = document.getElementById('video');
 const hint = document.getElementById('hint');
 
 video.addEventListener('click', () => {
+
     video.muted = !video.muted;
 
-    if(video.muted){
-        hint.textContent = "已靜音";
-    }else{
-        hint.textContent = "已開啟聲音";
+    if (video.muted) {
+        hint.textContent = "🔇 已靜音";
+    } else {
+        hint.textContent = "🔊 已開啟聲音";
     }
+
+    hint.style.opacity = "1";
 
     setTimeout(() => {
         hint.style.opacity = "0";
